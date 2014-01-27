@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Strings for Dialog yes button -->
+    <string name="yes">"Yes"</string>
+
+    <!-- Strings for Dialog no button -->
+    <string name="no">"No"</string>
+
+    <!-- Strings for Dialog create button -->
+    <string name="create">Create</string>
+
+    <!-- Strings for Dialog allow button -->
+    <string name="allow">Allow</string>
+
+    <!-- Strings for Dialog deny button -->
+    <string name="deny">Deny</string>
+
+    <!-- Category headings in left-pane header menu --> <skip />
+    <!-- Settings main menu category heading. Interface (PIE, ...). [CHAR LIMIT=40] -->
+    <string name="header_category_interface">INTERFACE</string>
+
+    <!-- PIE settings title -->
+    <string name="pie_settings_title">Pie</string>
+
+    <!-- The title of the dialog to pick an activity.  This is shown when there are multiple activities that can do a particular action.  For example, suppose you click on the "Share" menu item in the Browser.  Since you can share the webpage URL via many communication methods, this dialog would come up with choices like "Email", "IM", etc.  This is a generic message, and the previous example is a single possible scenario (so please don't assume it's for the browser or anything :) ). -->
+    <string name="activity_picker_label">Choose activity</string>
+    <!-- Do not translate. -->
+    <string name="debug_intent_sender_label">Debug intent sender</string>
+
+    <!-- ======================================================================================= -->
+    <!-- NEW STUFF -->
+    <!-- ======================================================================================= -->
+
+    <!-- Button label for generic cancel action -->
+    <string name="cancel">Cancel</string>
+
+    <!-- Title of the Settings activity shown within the application itself. -->
+    <string name="settings_label">Melted Butter</string>
+    <!-- Title of the Settings activity shown in the Launcher. [CHAR LIMIT=20] -->
+    <string name="settings_label_launcher">Melted Butter</string>
+    <!-- Label for option to select a settings panel as a shortcut -->
+    <string name="settings_shortcut">Settings shortcut</string>
+
+    <!-- Warning message when changing a global setting for a tablet.[CHAR LIMIT=none] -->
+    <string name="global_change_warning" product="tablet">This setting affects all users on this tablet.</string>
+    <!-- Warning message when changing a global setting for a phone.[CHAR LIMIT=none] -->
+    <string name="global_change_warning" product="default">This setting affects all users on this phone.</string>
+</resources>

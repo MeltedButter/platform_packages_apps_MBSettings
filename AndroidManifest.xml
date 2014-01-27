@@ -1,0 +1,45 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.android.mbsettings"
+        android:sharedUserId="android.uid.system">
+
+    <original-package android:name="com.android.mbsettings" />
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <application android:label="@string/settings_label"
+            android:icon="@mipmap/ic_launcher_settings"
+            android:taskAffinity=""
+            android:theme="@style/Theme.Settings"
+            android:hardwareAccelerated="true"
+            android:requiredForAllUsers="true"
+            android:supportsRtl="true">
+
+        <!-- Settings -->
+
+        <activity android:name="Settings"
+                android:label="@string/settings_label_launcher"
+                android:taskAffinity="com.android.mbsettings"
+                android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.settings.SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".SubSettings"
+                android:taskAffinity="com.android.mbsettings"
+                android:parentActivityName="Settings">
+        </activity>
+
+        <activity android:name="CreateShortcut" android:label="@string/settings_shortcut"
+            android:theme="@style/Theme.CreateShortCut">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
