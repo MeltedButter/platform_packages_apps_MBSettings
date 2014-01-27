@@ -33,9 +33,6 @@
     <!-- Settings main menu category heading. Interface (PIE, ...). [CHAR LIMIT=40] -->
     <string name="header_category_interface">INTERFACE</string>
 
-    <!-- PIE settings title -->
-    <string name="pie_settings_title">Pie</string>
-
     <!-- The title of the dialog to pick an activity.  This is shown when there are multiple activities that can do a particular action.  For example, suppose you click on the "Share" menu item in the Browser.  Since you can share the webpage URL via many communication methods, this dialog would come up with choices like "Email", "IM", etc.  This is a generic message, and the previous example is a single possible scenario (so please don't assume it's for the browser or anything :) ). -->
     <string name="activity_picker_label">Choose activity</string>
     <!-- Do not translate. -->
@@ -53,7 +50,7 @@
     <!-- Title of the Settings activity shown in the Launcher. [CHAR LIMIT=20] -->
     <string name="settings_label_launcher">Melted Butter</string>
     <!-- Label for option to select a settings panel as a shortcut -->
-    <string name="settings_shortcut">Settings shortcut</string>
+    <string name="settings_shortcut">Melted Butter shortcut</string>
 
     <!-- Warning message when changing a global setting for a tablet.[CHAR LIMIT=none] -->
     <string name="global_change_warning" product="tablet">This setting affects all users on this tablet.</string>

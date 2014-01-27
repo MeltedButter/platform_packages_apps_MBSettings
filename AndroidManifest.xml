@@ -23,7 +23,6 @@
                 android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.settings.SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -39,6 +38,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT" />
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.Pie"
+            android:label="@string/pie_controls_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="com.intent.category.SHORTCUT" />
             </intent-filter>
         </activity>
     </application>

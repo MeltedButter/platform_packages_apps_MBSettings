@@ -16,17 +16,10 @@
 
 package com.android.mbsettings;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -48,6 +41,8 @@ import android.widget.ListAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.mbsettings.ui.PieEnabler;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -60,13 +55,13 @@ public class Settings extends PreferenceActivity
     private static final String LOG_TAG = "Settings";
 
     private static final String META_DATA_KEY_HEADER_ID =
-        "com.android.mbsettings.TOP_LEVEL_HEADER_ID";
+            "com.android.mbsettings.TOP_LEVEL_HEADER_ID";
     private static final String META_DATA_KEY_FRAGMENT_CLASS =
-        "com.android.mbsettings.FRAGMENT_CLASS";
+            "com.android.mbsettings.FRAGMENT_CLASS";
     private static final String META_DATA_KEY_PARENT_TITLE =
-        "com.android.mbsettings.PARENT_FRAGMENT_TITLE";
+            "com.android.mbsettings.PARENT_FRAGMENT_TITLE";
     private static final String META_DATA_KEY_PARENT_FRAGMENT_CLASS =
-        "com.android.mbsettings.PARENT_FRAGMENT_CLASS";
+            "com.android.mbsettings.PARENT_FRAGMENT_CLASS";
 
     private static final String EXTRA_UI_OPTIONS = "settings:ui_options";
 
@@ -84,8 +79,6 @@ public class Settings extends PreferenceActivity
 
     protected HashMap<Integer, Integer> mHeaderIndexMap = new HashMap<Integer, Integer>();
 
-    private Header mLastHeader;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getIntent().hasExtra(EXTRA_UI_OPTIONS)) {
@@ -99,7 +92,8 @@ public class Settings extends PreferenceActivity
 
         if (!onIsHidingHeaders() && onIsMultiPane()) {
             highlightHeader(mTopLevelHeaderId);
-            // Force the title so that it doesn't get overridden by a direct launch of
+            // Force the title so that it doesn't get overridden by a direct
+            // launch of
             // a specific settings screen.
             setTitle(R.string.settings_label);
         }
@@ -112,7 +106,7 @@ public class Settings extends PreferenceActivity
 
         // If the current header was saved, switch to it
         if (savedInstanceState != null && mCurrentHeader != null) {
-            //switchToHeaderLocal(mCurrentHeader);
+            // switchToHeaderLocal(mCurrentHeader);
             showBreadCrumbs(mCurrentHeader.title, null);
         }
 
@@ -125,7 +119,8 @@ public class Settings extends PreferenceActivity
             });
         }
 
-        // Override up navigation for multi-pane, since we handle it in the fragment breadcrumbs
+        // Override up navigation for multi-pane, since we handle it in the
+        // fragment breadcrumbs
         if (onIsMultiPane()) {
             getActionBar().setDisplayHomeAsUpEnabled(false);
             getActionBar().setHomeButtonEnabled(false);
@@ -172,14 +167,15 @@ public class Settings extends PreferenceActivity
     }
 
     private static final String[] ENTRY_FRAGMENTS = {
-    };
+            };
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
         // Almost all fragments are wrapped in this,
         // except for a few that have their own activities.
         for (int i = 0; i < ENTRY_FRAGMENTS.length; i++) {
-            if (ENTRY_FRAGMENTS[i].equals(fragmentName)) return true;
+            if (ENTRY_FRAGMENTS[i].equals(fragmentName))
+                return true;
         }
         return false;
     }
@@ -201,6 +197,7 @@ public class Settings extends PreferenceActivity
 
     /**
      * Switch to parent fragment and store the grand parent's info
+     * 
      * @param className name of the activity wrapper for the parent fragment.
      */
     private void switchToParent(String className) {
@@ -221,8 +218,8 @@ public class Settings extends PreferenceActivity
                 highlightHeader(mTopLevelHeaderId);
 
                 mParentHeader = new Header();
-                mParentHeader.fragment
-                        = parentInfo.metaData.getString(META_DATA_KEY_PARENT_FRAGMENT_CLASS);
+                mParentHeader.fragment = parentInfo.metaData
+                        .getString(META_DATA_KEY_PARENT_FRAGMENT_CLASS);
                 mParentHeader.title = parentInfo.metaData.getString(META_DATA_KEY_PARENT_TITLE);
             }
         } catch (NameNotFoundException nnfe) {
@@ -260,7 +257,8 @@ public class Settings extends PreferenceActivity
         Intent superIntent = super.getIntent();
         String startingFragment = getStartingFragmentClass(superIntent);
         // This is called from super.onCreate, isMultiPane() is not yet reliable
-        // Do not use onIsHidingHeaders either, which relies itself on this method
+        // Do not use onIsHidingHeaders either, which relies itself on this
+        // method
         if (startingFragment != null && !onIsMultiPane()) {
             Intent modIntent = new Intent(superIntent);
             modIntent.putExtra(EXTRA_SHOW_FRAGMENT, startingFragment);
@@ -278,21 +276,23 @@ public class Settings extends PreferenceActivity
     }
 
     /**
-     * Checks if the component name in the intent is different from the Settings class and
-     * returns the class name to load as a fragment.
+     * Checks if the component name in the intent is different from the Settings
+     * class and returns the class name to load as a fragment.
      */
     protected String getStartingFragmentClass(Intent intent) {
-        if (mFragmentClass != null) return mFragmentClass;
+        if (mFragmentClass != null)
+            return mFragmentClass;
 
         String intentClass = intent.getComponent().getClassName();
-        if (intentClass.equals(getClass().getName())) return null;
+        if (intentClass.equals(getClass().getName()))
+            return null;
 
         return intentClass;
     }
 
     /**
-     * Override initial header when an activity-alias is causing Settings to be launched
-     * for a specific fragment encoded in the android:name parameter.
+     * Override initial header when an activity-alias is causing Settings to be
+     * launched for a specific fragment encoded in the android:name parameter.
      */
     @Override
     public Header onGetInitialHeader() {
@@ -333,7 +333,8 @@ public class Settings extends PreferenceActivity
         try {
             ActivityInfo ai = getPackageManager().getActivityInfo(getComponentName(),
                     PackageManager.GET_META_DATA);
-            if (ai == null || ai.metaData == null) return;
+            if (ai == null || ai.metaData == null)
+                return;
             mTopLevelHeaderId = ai.metaData.getInt(META_DATA_KEY_HEADER_ID);
             mFragmentClass = ai.metaData.getString(META_DATA_KEY_FRAGMENT_CLASS);
 
@@ -369,6 +370,8 @@ public class Settings extends PreferenceActivity
         static final int HEADER_TYPE_BUTTON = 3;
         private static final int HEADER_TYPE_COUNT = HEADER_TYPE_BUTTON + 1;
 
+        private final HashMap<Long, Enabler> mEnablers = new HashMap<Long, Enabler>();
+
         private static class HeaderViewHolder {
             ImageView icon;
             TextView title;
@@ -382,10 +385,13 @@ public class Settings extends PreferenceActivity
 
         static int getHeaderType(Header header) {
             if (header.fragment == null && header.intent == null) {
+                Log.e("getHeaderType", "CATEGORY");
                 return HEADER_TYPE_CATEGORY;
-            //} else if (header.id == R.id.wifi_settings || header.id == R.id.bluetooth_settings) {
-            //    return HEADER_TYPE_SWITCH;
+            } else if (header.id == R.id.pie_control) {
+                Log.e("getHeaderType", "SWITCH");
+                return HEADER_TYPE_SWITCH;
             } else {
+                Log.e("getHeaderType", "NORMAL");
                 return HEADER_TYPE_NORMAL;
             }
         }
@@ -419,18 +425,16 @@ public class Settings extends PreferenceActivity
         public HeaderAdapter(Context context, List<Header> objects, DevicePolicyManager dpm) {
             super(context, 0, objects);
 
-            mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            // Temp Switches provided as placeholder until the adapter replaces these with actual
-            // Switches inflated from their layouts. Must be done before adapter is set in super
-            /*
-            mWifiEnabler = new WifiEnabler(context, new Switch(context));
-            mBluetoothEnabler = new BluetoothEnabler(context, new Switch(context));
-            */
+            mEnablers.put((long) R.id.pie_control, new PieEnabler(context, new Switch(context)));
+            Log.e("getView", "Set enabler for " + R.id.pie_control);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            Log.e("HeaderAdapter", "getView");
+
             HeaderViewHolder holder;
             Header header = getItem(position);
             int headerType = getHeaderType(header);
@@ -485,21 +489,22 @@ public class Settings extends PreferenceActivity
                 holder = (HeaderViewHolder) view.getTag();
             }
 
-            // All view fields must be updated every time, because the view may be recycled
+            // All view fields must be updated every time, because the view may
+            // be recycled
             switch (headerType) {
                 case HEADER_TYPE_CATEGORY:
                     holder.title.setText(header.getTitle(getContext().getResources()));
                     break;
 
                 case HEADER_TYPE_SWITCH:
-                    // Would need a different treatment if the main menu had more switches
-                    /*
-                    if (header.id == R.id.wifi_settings) {
-                        mWifiEnabler.setSwitch(holder.switch_);
+                    Log.e("getView", "Looking for enabler for " + header.id);
+                    Enabler enabler = mEnablers.get(header.id);
+                    if (enabler != null) {
+                        Log.e("getView", "About to setSwitch");
+                        enabler.setSwitch(holder.switch_);
                     } else {
-                        mBluetoothEnabler.setSwitch(holder.switch_);
+                        Log.e("getView", "enabler was null");
                     }
-                    */
                     updateCommonHeaderView(header, holder);
                     break;
 
@@ -528,30 +533,22 @@ public class Settings extends PreferenceActivity
         }
 
         public void resume() {
-            /*
-            mWifiEnabler.resume();
-            mBluetoothEnabler.resume();
-            */
+            for (Enabler enabler : mEnablers.values()) {
+                enabler.resume();
+            }
         }
 
         public void pause() {
-            /*
-            mWifiEnabler.pause();
-            mBluetoothEnabler.pause();
-            */
+            for (Enabler enabler : mEnablers.values()) {
+                enabler.pause();
+            }
         }
-    }
-
-    @Override
-    public void onHeaderClick(Header header, int position) {
-        super.onHeaderClick(header, position);
-
-        mLastHeader = header;
     }
 
     @Override
     public boolean onPreferenceStartFragment(PreferenceFragment caller, Preference pref) {
-        startPreferencePanel(pref.getFragment(), pref.getExtras(), pref.getTitleRes(), pref.getTitle(),
+        startPreferencePanel(pref.getFragment(), pref.getExtras(), pref.getTitleRes(),
+                pref.getTitle(),
                 null, 0);
         return true;
     }
@@ -575,5 +572,5 @@ public class Settings extends PreferenceActivity
     /*
      * Settings subclasses for launching independently.
      */
-    //public static class WifiSettingsActivity extends Settings { /* empty */ }
+    // public static class WifiSettingsActivity extends Settings { /* empty */ }
 }
