@@ -33,10 +33,15 @@ public class PieEnabler extends Enabler {
     public void resume() {
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.PIE_CONTROLS), false, this);
+        updateSwitch();
     }
 
     @Override
     public void onChange(boolean selfChange, Uri uri) {
+        updateSwitch();
+    }
+    
+    private void updateSwitch() {
         mSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.PIE_CONTROLS, 0) != 0);
     }
