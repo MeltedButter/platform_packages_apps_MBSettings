@@ -43,7 +43,8 @@ public class PieEnabler extends Enabler {
         updateSwitch();
     }
 
-    private void updateSwitch() {
+    @Override
+    protected void updateSwitch() {
         mSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 MBSettings.PIE_CONTROLS, 0) != 0);
     }

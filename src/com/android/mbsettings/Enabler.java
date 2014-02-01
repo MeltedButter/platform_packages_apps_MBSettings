@@ -24,6 +24,7 @@ public abstract class Enabler extends ContentObserver implements
         mSwitch.setOnCheckedChangeListener(null);
         mSwitch = switch_;
         mSwitch.setOnCheckedChangeListener(this);
+        updateSwitch();
     }
     
     @Override
@@ -34,4 +35,6 @@ public abstract class Enabler extends ContentObserver implements
     public abstract void pause();
 
     public abstract void resume();
+
+    protected abstract void updateSwitch();
 }
