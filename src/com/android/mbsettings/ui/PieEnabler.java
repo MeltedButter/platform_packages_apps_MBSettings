@@ -10,12 +10,14 @@ import android.widget.Switch;
 
 import com.android.mbsettings.Enabler;
 
+import meltedbutter.provider.MBSettings;
+
 public class PieEnabler extends Enabler {
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         Log.e("PieEnabler", "onCheckedChanged");
         Settings.System.putInt(mContext.getContentResolver(),
-                Settings.System.PIE_CONTROLS, isChecked ? 1 : 0);
+                MBSettings.PIE_CONTROLS, isChecked ? 1 : 0);
     }
 
     public PieEnabler(Context context, Switch switch_) {
@@ -32,7 +34,7 @@ public class PieEnabler extends Enabler {
     @Override
     public void resume() {
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.PIE_CONTROLS), false, this);
+                Settings.System.getUriFor(MBSettings.PIE_CONTROLS), false, this);
         updateSwitch();
     }
 
@@ -40,9 +42,9 @@ public class PieEnabler extends Enabler {
     public void onChange(boolean selfChange, Uri uri) {
         updateSwitch();
     }
-    
+
     private void updateSwitch() {
         mSwitch.setChecked(Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) != 0);
+                MBSettings.PIE_CONTROLS, 0) != 0);
     }
 }
